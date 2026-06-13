@@ -26,8 +26,8 @@ A full-stack project management platform built with Spring Boot, React, and MySQ
 ## Project Structure
 
 taskflow-platform/
-├── frontend/
-└── backend/
+├── Frontend/
+├── Backend/
 
 ## Status
 
