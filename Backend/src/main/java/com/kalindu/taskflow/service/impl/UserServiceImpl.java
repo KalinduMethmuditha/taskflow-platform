@@ -40,5 +40,64 @@ public class UserServiceImpl implements UserService {
                 .role(savedUser.getRole())
                 .build();
     }
+    @Override
+    public List<UserResponseDTO> getAllUsers() {
+
+        List<User> users = userRepository.findAll();
+
+        return users.stream()
+                .map(user -> UserResponseDTO.builder()
+                        .id(user.getId())
+                        .fullName(user.getFullName())
+                        .email(user.getEmail())
+                        .role(user.getRole())
+                        .build())
+                .toList();
+    }
+
+    @Override
+    public UserResponseDTO getUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("id"));
+
+        return UserResponseDTO.builder()
+                .id(user.getId())
+                .fullName(user.getFullName())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .build();
+    }
+    @Override
+    public UserResponseDTO updateUser(Long id, UserRequestDTO request) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("id"));
+
+        user.setFullName(request.getFullName());
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
+        user.setRole(request.getRole());
+
+        User updatedUser = userRepository.save(user);
+
+        return UserResponseDTO.builder()
+                .id(updatedUser.getId())
+                .fullName(updatedUser.getFullName())
+                .email(updatedUser.getEmail())
+                .role(updatedUser.getRole())
+                .build();
+    }
+    @Override
+    public void deleteUser(Long id) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("id"));
+
+        userRepository.delete(user);
+    }
+
 
 }
