@@ -35,6 +35,6 @@ build/
 .vscode/
 
 # Spring Boot config
-Backend/src/main/resources/application.properties
+**/application.properties
 
 
