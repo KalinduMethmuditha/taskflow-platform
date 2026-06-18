@@ -3,6 +3,7 @@ package com.kalindu.taskflow.entity;
 import com.kalindu.taskflow.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.List;
 
 @Entity
 @Table(name="users")
@@ -30,5 +31,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Project> projects;
+
+    @OneToMany(mappedBy = "assignedUser")
+    private List<Task> assignedTasks;
 
 }

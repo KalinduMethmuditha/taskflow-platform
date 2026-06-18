@@ -3,6 +3,7 @@ package com.kalindu.taskflow.service;
 import com.kalindu.taskflow.dto.UserRequestDTO;
 import com.kalindu.taskflow.dto.UserResponseDTO;
 import com.kalindu.taskflow.entity.User;
+import com.kalindu.taskflow.mapper.UserMapper;
 
 import java.util.List;
 public interface UserService

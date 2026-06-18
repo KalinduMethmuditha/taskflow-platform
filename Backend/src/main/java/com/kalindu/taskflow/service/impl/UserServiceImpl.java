@@ -1,11 +1,13 @@
 package com.kalindu.taskflow.service.impl;
 
+import com.kalindu.taskflow.exception.UserNotFoundException;
 import com.kalindu.taskflow.dto.UserRequestDTO;
 import com.kalindu.taskflow.dto.UserResponseDTO;
 import com.kalindu.taskflow.entity.User;
 import com.kalindu.taskflow.repository.UserRepository;
 import com.kalindu.taskflow.service.UserService;
 import org.springframework.stereotype.Service;
+import com.kalindu.taskflow.mapper.UserMapper;
 
 import java.util.List;
 
@@ -33,12 +35,7 @@ public class UserServiceImpl implements UserService {
 
         User savedUser = userRepository.save(user);
 
-        return UserResponseDTO.builder()
-                .id(savedUser.getId())
-                .fullName(savedUser.getFullName())
-                .email(savedUser.getEmail())
-                .role(savedUser.getRole())
-                .build();
+        return UserMapper.toResponseDTO(savedUser);
     }
     @Override
     public List<UserResponseDTO> getAllUsers() {
@@ -59,7 +56,7 @@ public class UserServiceImpl implements UserService {
     public UserResponseDTO getUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("id"));
+                        new UserNotFoundException(id));
 
         return UserResponseDTO.builder()
                 .id(user.getId())
@@ -73,7 +70,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("id"));
+                        new UserNotFoundException(id));
 
         user.setFullName(request.getFullName());
         user.setEmail(request.getEmail());
@@ -94,7 +91,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("id"));
+                        new UserNotFoundException(id));
 
         userRepository.delete(user);
     }
