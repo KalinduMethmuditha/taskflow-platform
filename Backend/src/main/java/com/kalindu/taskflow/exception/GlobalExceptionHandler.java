@@ -26,4 +26,13 @@ public class GlobalExceptionHandler {
                 HttpStatus.NOT_FOUND
         );
     }
+    @ExceptionHandler(TaskNotFoundException.class)
+    public ResponseEntity<String> handleTaskNotFound(
+            TaskNotFoundException ex) {
+
+        return new ResponseEntity<>(
+                ex.getMessage(),
+                HttpStatus.NOT_FOUND
+        );
+    }
 }
