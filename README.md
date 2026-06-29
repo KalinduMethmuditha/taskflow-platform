@@ -239,17 +239,6 @@ mvn spring-boot:run
 
 ---
 
-## 📷 Screenshots
-
-(Add these after completing the project)
-
-- Swagger UI
-- MySQL Database
-- Postman
-- React Dashboard
-
----
-
 ## 📈 Future Improvements
 
 - React Frontend
@@ -268,8 +257,8 @@ mvn spring-boot:run
 
 **Kalindu Methmuditha**
 
-Software Engineering Undergraduate
+IT Undergraduate
 
-GitHub: https://github.com/YOUR_USERNAME
+GitHub: https://github.com/KalinduMethmuditha
 
-LinkedIn: https://linkedin.com/in/YOUR_LINKEDIN
+LinkedIn: https://linkedin.com/in/kalindu-methmuditha
