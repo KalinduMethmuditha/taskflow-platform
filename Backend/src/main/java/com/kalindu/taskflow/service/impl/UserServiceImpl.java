@@ -8,16 +8,19 @@ import com.kalindu.taskflow.repository.UserRepository;
 import com.kalindu.taskflow.service.UserService;
 import org.springframework.stereotype.Service;
 import com.kalindu.taskflow.mapper.UserMapper;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
     @Override
     public UserResponseDTO createUser(UserRequestDTO request) {
@@ -29,7 +32,7 @@ public class UserServiceImpl implements UserService {
         User user = User.builder()
                 .fullName(request.getFullName())
                 .email(request.getEmail())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
                 .build();
 

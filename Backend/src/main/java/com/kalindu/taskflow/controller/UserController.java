@@ -5,6 +5,7 @@ import com.kalindu.taskflow.dto.UserResponseDTO;
 import com.kalindu.taskflow.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
@@ -18,20 +19,26 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public UserResponseDTO createUser(
             @Valid @RequestBody UserRequestDTO request) {
 
         return userService.createUser(request);
     }
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @GetMapping
     public List<UserResponseDTO> getAllUsers() {
         return userService.getAllUsers();
     }
+
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @GetMapping("/{id}")
     public UserResponseDTO getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public UserResponseDTO updateUser(
             @PathVariable Long id,
@@ -39,6 +46,8 @@ public class UserController {
 
         return userService.updateUser(id, request);
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable Long id) {
 
@@ -46,5 +55,6 @@ public class UserController {
 
         return "User deleted successfully";
     }
+
 
 }

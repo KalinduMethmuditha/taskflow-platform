@@ -64,4 +64,35 @@ public class ProjectServiceImpl implements ProjectService {
 
         return ProjectMapper.toResponseDTO(project);
     }
+
+    @Override
+    public ProjectResponseDTO updateProject(Long id,
+                                                ProjectRequestDTO request) {
+
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() ->
+                        new ProjectNotFoundException(id));
+
+        User owner = userRepository.findById(request.getOwnerId())
+                .orElseThrow(() ->
+                        new UserNotFoundException(request.getOwnerId()));
+
+        project.setName(request.getName());
+        project.setDescription(request.getDescription());
+        project.setOwner(owner);
+
+        Project updatedProject = projectRepository.save(project);
+
+        return ProjectMapper.toResponseDTO(updatedProject);
+    }
+
+    @Override
+    public void deleteProject(Long id) {
+
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() ->
+                        new ProjectNotFoundException(id));
+
+        projectRepository.delete(project);
+    }
 }
